@@ -83,9 +83,10 @@ class _VideoContentState extends StoryContentState<VideoContent> {
       return widget.errorBuiler!.call();
     }
 
-    if (_videoController?.value.isInitialized == true) {
+    if (_videoController?.value.initialized == true) {
       return Center(
         child:Container(
+          color:Colors.black,
         child: AspectRatio(
           aspectRatio: _videoController!.value.aspectRatio,
           child: VideoPlayer(_videoController!),
