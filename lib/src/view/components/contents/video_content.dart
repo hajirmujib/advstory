@@ -85,10 +85,12 @@ class _VideoContentState extends StoryContentState<VideoContent> {
 
     if (_videoController?.value.isInitialized == true) {
       return Center(
+        child:Container(
         child: AspectRatio(
           aspectRatio: _videoController!.value.aspectRatio,
           child: VideoPlayer(_videoController!),
         ),
+      )
       );
     }
 
