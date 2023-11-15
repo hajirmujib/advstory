@@ -1,3 +1,6 @@
+import 'dart:js_interop';
+import 'dart:typed_data';
+
 import 'package:advstory/advstory.dart';
 import 'package:advstory/src/util/animated_border_painter.dart';
 import 'package:advstory/src/view/components/shimmer.dart';
@@ -38,6 +41,7 @@ class AdvStoryTray extends AnimatedTray {
     this.heightFrontImageProfile = 29,
     this.widthFrontImageProfile = 29,
     this.urlFrontImageProfile = '',
+    this.bgVideo,
     this.borderGradientColors = const [
       Color(0xaf405de6),
       Color(0xaf5851db),
@@ -79,6 +83,7 @@ class AdvStoryTray extends AnimatedTray {
   final String urlFrontImageProfile;
   final Function? onTapProfile;
   final bool isMyProfile;
+  final Uint8List? bgVideo;
 
   /// Border gradient colors. Two same color creates a solid border.
   final List<Color> borderGradientColors;
@@ -285,20 +290,28 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                     widget.onTapProfile!();
                   }
                 },
-                child: Container(
-                  width: widget.widthFrontImageProfile,
-                  height: widget.heightFrontImageProfile,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              widget.urlFrontImageProfile.isEmpty
-                                  ? widget.urlFrontImageProfile
-                                  : widget.urlFrontImageProfile),
-                          fit: BoxFit.cover),
-                      border: Border.all(color: Colors.white),
-                      shape: BoxShape.circle,
-                      color: Colors.blueGrey),
-                ),
+                child: !widget.bgVideo.isNull
+                    ? Container(
+                        width: widget.widthFrontImageProfile,
+                        height: widget.heightFrontImageProfile,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            shape: BoxShape.circle,
+                            color: Colors.blueGrey),
+                        child: Image.memory(widget.bgVideo!),
+                      )
+                    : Container(
+                        width: widget.widthFrontImageProfile,
+                        height: widget.heightFrontImageProfile,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    NetworkImage(widget.urlFrontImageProfile),
+                                fit: BoxFit.cover),
+                            border: Border.all(color: Colors.white),
+                            shape: BoxShape.circle,
+                            color: Colors.blueGrey),
+                      ),
               ),
             )
         ],
