@@ -248,60 +248,69 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                             //       )
                             //     :
                             widget.isMyProfile
-                                ? Column(
-                                    children: [
-                                      Image.network(
-                                        widget.bgStory,
-                                        width: widget.size.width -
-                                            (widget.gapSize +
-                                                    widget.strokeWidth) *
-                                                2,
-                                        height: (widget.size.height -
-                                                    (widget.gapSize +
-                                                            widget
-                                                                .strokeWidth) *
-                                                        2) /
-                                                2 +
-                                            20,
-                                        fit: BoxFit.cover,
-                                        frameBuilder:
-                                            (context, child, frame, _) {
-                                          return frame != null
-                                              ? TweenAnimationBuilder<double>(
-                                                  tween: Tween<double>(
-                                                      begin: .1, end: 1),
-                                                  curve: Curves.ease,
-                                                  duration: const Duration(
-                                                      milliseconds: 300),
-                                                  builder:
-                                                      (BuildContext context,
-                                                          double opacity, _) {
-                                                    return Opacity(
-                                                      opacity: opacity,
-                                                      child: child,
-                                                    );
-                                                  },
-                                                )
-                                              : Shimmer(
-                                                  style: widget.shimmerStyle);
-                                        },
-                                        errorBuilder: (_, __, ___) {
-                                          return const Icon(Icons.error);
-                                        },
+                                ? Container(
+                                    decoration: const BoxDecoration(boxShadow: [
+                                      BoxShadow(
+                                        color: Color(0xFFC5C5C5),
+                                        blurRadius: 4,
+                                        offset: Offset(0, 8), // Shadow position
                                       ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      const Center(
-                                        child: Text(
-                                          'Make my day',
-                                          style: TextStyle(
-                                              color: Color(0xFFC82626),
-                                              fontSize: 8,
-                                              fontWeight: FontWeight.w700),
+                                    ]),
+                                    child: Column(
+                                      children: [
+                                        Image.network(
+                                          widget.bgStory,
+                                          width: widget.size.width -
+                                              (widget.gapSize +
+                                                      widget.strokeWidth) *
+                                                  2,
+                                          height: (widget.size.height -
+                                                      (widget.gapSize +
+                                                              widget
+                                                                  .strokeWidth) *
+                                                          2) /
+                                                  2 +
+                                              20,
+                                          fit: BoxFit.cover,
+                                          frameBuilder:
+                                              (context, child, frame, _) {
+                                            return frame != null
+                                                ? TweenAnimationBuilder<double>(
+                                                    tween: Tween<double>(
+                                                        begin: .1, end: 1),
+                                                    curve: Curves.ease,
+                                                    duration: const Duration(
+                                                        milliseconds: 300),
+                                                    builder:
+                                                        (BuildContext context,
+                                                            double opacity, _) {
+                                                      return Opacity(
+                                                        opacity: opacity,
+                                                        child: child,
+                                                      );
+                                                    },
+                                                  )
+                                                : Shimmer(
+                                                    style: widget.shimmerStyle);
+                                          },
+                                          errorBuilder: (_, __, ___) {
+                                            return const Icon(Icons.error);
+                                          },
                                         ),
-                                      )
-                                    ],
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        const Center(
+                                          child: Text(
+                                            'Make my day',
+                                            style: TextStyle(
+                                                color: Color(0xFFC82626),
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 : Image.network(
                                     widget.bgStory,
