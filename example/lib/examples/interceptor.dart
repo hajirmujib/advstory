@@ -96,7 +96,9 @@ class _InterceptorState extends State<Interceptor> {
                 },
               ),
             ),
-            trayBuilder: (index) => AdvStoryTray(url: profilePics[index]),
+            trayBuilder: (index) => AdvStoryTray(
+              bgStory: '',
+              url: profilePics[index]),
           ),
         ),
       ],

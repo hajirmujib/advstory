@@ -197,6 +197,7 @@ class _ControllerUsageState extends State<ControllerUsage> {
                     },
                   ),
                   trayBuilder: (index) => AdvStoryTray(
+                    bgStory: '',
                     url: profilePics[index],
                   ),
                 ),

@@ -73,6 +73,7 @@ class CustomHeaderFooter extends StatelessWidget {
       },
       trayBuilder: (index) {
         return AdvStoryTray(
+          bgStory: '',
           url: profilePics[index],
           username: Text(
             userNames[index],
