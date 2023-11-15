@@ -41,6 +41,7 @@ class AdvStoryTray extends AnimatedTray {
     this.heightFrontImageProfile = 29,
     this.widthFrontImageProfile = 29,
     this.urlFrontImageProfile = '',
+    required this.bgStory,
     this.borderGradientColors = const [
       Color(0xaf405de6),
       Color(0xaf5851db),
@@ -80,6 +81,7 @@ class AdvStoryTray extends AnimatedTray {
   final double widthFrontImageProfile;
   final double heightFrontImageProfile;
   final String urlFrontImageProfile;
+  final String bgStory;
   final Function? onTapProfile;
   final bool isMyProfile;
   final Uint8List? bgVideo;
@@ -246,7 +248,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                             //       )
                             //     :
                             Image.network(
-                          widget.urlFrontImageProfile,
+                          widget.bgStory,
                           width: widget.size.width -
                               (widget.gapSize + widget.strokeWidth) * 2,
                           height: widget.size.height -
