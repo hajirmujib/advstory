@@ -34,13 +34,13 @@ class AdvStoryTray extends AnimatedTray {
     this.username,
     this.isMyProfile = false,
     this.onTapProfile,
+    this.bgVideo,
     this.size = const Size(80, 80),
     this.shimmerStyle = const ShimmerStyle(),
     this.shape = BoxShape.circle,
     this.heightFrontImageProfile = 29,
     this.widthFrontImageProfile = 29,
     this.urlFrontImageProfile = '',
-    this.bgVideo,
     this.borderGradientColors = const [
       Color(0xaf405de6),
       Color(0xaf5851db),
@@ -213,33 +213,65 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                           widget.borderRadius -
                               (widget.strokeWidth + widget.gapSize),
                         ),
-                        child: Image.network(
-                          widget.url,
-                          width: widget.size.width -
-                              (widget.gapSize + widget.strokeWidth) * 2,
-                          height: widget.size.height -
-                              (widget.gapSize + widget.strokeWidth) * 2,
-                          fit: BoxFit.cover,
-                          frameBuilder: (context, child, frame, _) {
-                            return frame != null
-                                ? TweenAnimationBuilder<double>(
-                                    tween: Tween<double>(begin: .1, end: 1),
-                                    curve: Curves.ease,
-                                    duration: const Duration(milliseconds: 300),
-                                    builder: (BuildContext context,
-                                        double opacity, _) {
-                                      return Opacity(
-                                        opacity: opacity,
-                                        child: child,
-                                      );
-                                    },
-                                  )
-                                : Shimmer(style: widget.shimmerStyle);
-                          },
-                          errorBuilder: (_, __, ___) {
-                            return const Icon(Icons.error);
-                          },
-                        ),
+                        child: widget.bgVideo != null
+                            ? Image.memory(
+                                widget.bgVideo!,
+                                width: widget.size.width -
+                                    (widget.gapSize + widget.strokeWidth) * 2,
+                                height: widget.size.height -
+                                    (widget.gapSize + widget.strokeWidth) * 2,
+                                fit: BoxFit.cover,
+                                frameBuilder: (context, child, frame, _) {
+                                  return frame != null
+                                      ? TweenAnimationBuilder<double>(
+                                          tween:
+                                              Tween<double>(begin: .1, end: 1),
+                                          curve: Curves.ease,
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          builder: (BuildContext context,
+                                              double opacity, _) {
+                                            return Opacity(
+                                              opacity: opacity,
+                                              child: child,
+                                            );
+                                          },
+                                        )
+                                      : Shimmer(style: widget.shimmerStyle);
+                                },
+                                errorBuilder: (_, __, ___) {
+                                  return const Icon(Icons.error);
+                                },
+                              )
+                            : Image.network(
+                                widget.url,
+                                width: widget.size.width -
+                                    (widget.gapSize + widget.strokeWidth) * 2,
+                                height: widget.size.height -
+                                    (widget.gapSize + widget.strokeWidth) * 2,
+                                fit: BoxFit.cover,
+                                frameBuilder: (context, child, frame, _) {
+                                  return frame != null
+                                      ? TweenAnimationBuilder<double>(
+                                          tween:
+                                              Tween<double>(begin: .1, end: 1),
+                                          curve: Curves.ease,
+                                          duration:
+                                              const Duration(milliseconds: 300),
+                                          builder: (BuildContext context,
+                                              double opacity, _) {
+                                            return Opacity(
+                                              opacity: opacity,
+                                              child: child,
+                                            );
+                                          },
+                                        )
+                                      : Shimmer(style: widget.shimmerStyle);
+                                },
+                                errorBuilder: (_, __, ___) {
+                                  return const Icon(Icons.error);
+                                },
+                              ),
                       ),
                     ),
                   ],
@@ -289,28 +321,20 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                     widget.onTapProfile!();
                   }
                 },
-                child: widget.bgVideo != null
-                    ? Container(
-                        width: widget.widthFrontImageProfile,
-                        height: widget.heightFrontImageProfile,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            shape: BoxShape.circle,
-                            color: Colors.blueGrey),
-                        child: Image.memory(widget.bgVideo!),
-                      )
-                    : Container(
-                        width: widget.widthFrontImageProfile,
-                        height: widget.heightFrontImageProfile,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image:
-                                    NetworkImage(widget.urlFrontImageProfile),
-                                fit: BoxFit.cover),
-                            border: Border.all(color: Colors.white),
-                            shape: BoxShape.circle,
-                            color: Colors.blueGrey),
-                      ),
+                child: Container(
+                  width: widget.widthFrontImageProfile,
+                  height: widget.heightFrontImageProfile,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              widget.urlFrontImageProfile.isEmpty
+                                  ? widget.urlFrontImageProfile
+                                  : widget.urlFrontImageProfile),
+                          fit: BoxFit.cover),
+                      border: Border.all(color: Colors.white),
+                      shape: BoxShape.circle,
+                      color: Colors.blueGrey),
+                ),
               ),
             )
         ],
