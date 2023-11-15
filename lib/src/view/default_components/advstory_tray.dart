@@ -249,9 +249,11 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                             //     :
                             widget.isMyProfile
                                 ? Container(
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                         color: Colors.white,
-                                        boxShadow: [
+                                        border: Border.all(
+                                            color: const Color(0xFFC5C5C5)),
+                                        boxShadow: const [
                                           BoxShadow(
                                             color: Color(0xFFC5C5C5),
                                             blurRadius: 4,
