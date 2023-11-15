@@ -247,33 +247,93 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                             //         },
                             //       )
                             //     :
-                            Image.network(
-                          widget.bgStory,
-                          width: widget.size.width -
-                              (widget.gapSize + widget.strokeWidth) * 2,
-                          height: widget.size.height -
-                              (widget.gapSize + widget.strokeWidth) * 2,
-                          fit: BoxFit.cover,
-                          frameBuilder: (context, child, frame, _) {
-                            return frame != null
-                                ? TweenAnimationBuilder<double>(
-                                    tween: Tween<double>(begin: .1, end: 1),
-                                    curve: Curves.ease,
-                                    duration: const Duration(milliseconds: 300),
-                                    builder: (BuildContext context,
-                                        double opacity, _) {
-                                      return Opacity(
-                                        opacity: opacity,
-                                        child: child,
-                                      );
-                                    },
+                            widget.isMyProfile
+                                ? Column(
+                                    children: [
+                                      Image.network(
+                                        widget.bgStory,
+                                        width: widget.size.width -
+                                            (widget.gapSize +
+                                                    widget.strokeWidth) *
+                                                2,
+                                        height: (widget.size.height -
+                                                    (widget.gapSize +
+                                                            widget
+                                                                .strokeWidth) *
+                                                        2) /
+                                                2 +
+                                            20,
+                                        fit: BoxFit.cover,
+                                        frameBuilder:
+                                            (context, child, frame, _) {
+                                          return frame != null
+                                              ? TweenAnimationBuilder<double>(
+                                                  tween: Tween<double>(
+                                                      begin: .1, end: 1),
+                                                  curve: Curves.ease,
+                                                  duration: const Duration(
+                                                      milliseconds: 300),
+                                                  builder:
+                                                      (BuildContext context,
+                                                          double opacity, _) {
+                                                    return Opacity(
+                                                      opacity: opacity,
+                                                      child: child,
+                                                    );
+                                                  },
+                                                )
+                                              : Shimmer(
+                                                  style: widget.shimmerStyle);
+                                        },
+                                        errorBuilder: (_, __, ___) {
+                                          return const Icon(Icons.error);
+                                        },
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      const Center(
+                                        child: Text(
+                                          'Make my day',
+                                          style: TextStyle(
+                                              color: Color(0xFFC82626),
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      )
+                                    ],
                                   )
-                                : Shimmer(style: widget.shimmerStyle);
-                          },
-                          errorBuilder: (_, __, ___) {
-                            return const Icon(Icons.error);
-                          },
-                        ),
+                                : Image.network(
+                                    widget.bgStory,
+                                    width: widget.size.width -
+                                        (widget.gapSize + widget.strokeWidth) *
+                                            2,
+                                    height: widget.size.height -
+                                        (widget.gapSize + widget.strokeWidth) *
+                                            2,
+                                    fit: BoxFit.cover,
+                                    frameBuilder: (context, child, frame, _) {
+                                      return frame != null
+                                          ? TweenAnimationBuilder<double>(
+                                              tween: Tween<double>(
+                                                  begin: .1, end: 1),
+                                              curve: Curves.ease,
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              builder: (BuildContext context,
+                                                  double opacity, _) {
+                                                return Opacity(
+                                                  opacity: opacity,
+                                                  child: child,
+                                                );
+                                              },
+                                            )
+                                          : Shimmer(style: widget.shimmerStyle);
+                                    },
+                                    errorBuilder: (_, __, ___) {
+                                      return const Icon(Icons.error);
+                                    },
+                                  ),
                       ),
                     ),
                   ],

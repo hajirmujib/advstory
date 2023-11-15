@@ -107,6 +107,7 @@ class _AdvStoryTrayCustomizationState extends State<AdvStoryTrayCustomization> {
                   url: profilePics[index],
                   size: const Size(76, 97),
                   shape: BoxShape.rectangle,
+                  bgStory: '',
                   // borderRadius: index % 2 == 0 ? _radius : _radius / 2,
                   borderRadius: _radius,
                   borderGradientColors: _selectedColors,
