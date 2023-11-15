@@ -219,7 +219,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                           boxShadow: const [
                             BoxShadow(
                               color: Color(0xFFC5C5C5),
-                              blurRadius: 4,
+                              blurRadius: 2,
                               offset: Offset(0, 8), // Shadow position
                             ),
                           ]),
