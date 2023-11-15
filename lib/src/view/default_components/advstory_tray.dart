@@ -210,14 +210,19 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                       ),
                     ),
                     Container(
-                      decoration:
-                          const BoxDecoration(color: Colors.white, boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFFC5C5C5),
-                          blurRadius: 4,
-                          offset: Offset(0, 4), // Shadow position
-                        ),
-                      ]),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            widget.borderRadius -
+                                (widget.strokeWidth + widget.gapSize),
+                          ),
+                          color: Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xFFC5C5C5),
+                              blurRadius: 4,
+                              offset: Offset(0, 8), // Shadow position
+                            ),
+                          ]),
                       child: Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(
