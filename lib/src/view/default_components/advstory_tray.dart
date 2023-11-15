@@ -1,4 +1,3 @@
-import 'dart:js_interop';
 import 'dart:typed_data';
 
 import 'package:advstory/advstory.dart';
@@ -290,7 +289,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                     widget.onTapProfile!();
                   }
                 },
-                child: !widget.bgVideo.isNull
+                child: widget.bgVideo != null
                     ? Container(
                         width: widget.widthFrontImageProfile,
                         height: widget.heightFrontImageProfile,
