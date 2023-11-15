@@ -213,65 +213,65 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                           widget.borderRadius -
                               (widget.strokeWidth + widget.gapSize),
                         ),
-                        child: widget.bgVideo != null
-                            ? Image.memory(
-                                widget.bgVideo!,
-                                width: widget.size.width -
-                                    (widget.gapSize + widget.strokeWidth) * 2,
-                                height: widget.size.height -
-                                    (widget.gapSize + widget.strokeWidth) * 2,
-                                fit: BoxFit.cover,
-                                frameBuilder: (context, child, frame, _) {
-                                  return frame != null
-                                      ? TweenAnimationBuilder<double>(
-                                          tween:
-                                              Tween<double>(begin: .1, end: 1),
-                                          curve: Curves.ease,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          builder: (BuildContext context,
-                                              double opacity, _) {
-                                            return Opacity(
-                                              opacity: opacity,
-                                              child: child,
-                                            );
-                                          },
-                                        )
-                                      : Shimmer(style: widget.shimmerStyle);
-                                },
-                                errorBuilder: (_, __, ___) {
-                                  return const Icon(Icons.error);
-                                },
-                              )
-                            : Image.network(
-                                widget.url,
-                                width: widget.size.width -
-                                    (widget.gapSize + widget.strokeWidth) * 2,
-                                height: widget.size.height -
-                                    (widget.gapSize + widget.strokeWidth) * 2,
-                                fit: BoxFit.cover,
-                                frameBuilder: (context, child, frame, _) {
-                                  return frame != null
-                                      ? TweenAnimationBuilder<double>(
-                                          tween:
-                                              Tween<double>(begin: .1, end: 1),
-                                          curve: Curves.ease,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          builder: (BuildContext context,
-                                              double opacity, _) {
-                                            return Opacity(
-                                              opacity: opacity,
-                                              child: child,
-                                            );
-                                          },
-                                        )
-                                      : Shimmer(style: widget.shimmerStyle);
-                                },
-                                errorBuilder: (_, __, ___) {
-                                  return const Icon(Icons.error);
-                                },
-                              ),
+                        child:
+                            // widget.bgVideo != null
+                            //     ? Image.memory(
+                            //         widget.bgVideo!,
+                            //         width: widget.size.width -
+                            //             (widget.gapSize + widget.strokeWidth) * 2,
+                            //         height: widget.size.height -
+                            //             (widget.gapSize + widget.strokeWidth) * 2,
+                            //         fit: BoxFit.cover,
+                            //         frameBuilder: (context, child, frame, _) {
+                            //           return frame != null
+                            //               ? TweenAnimationBuilder<double>(
+                            //                   tween:
+                            //                       Tween<double>(begin: .1, end: 1),
+                            //                   curve: Curves.ease,
+                            //                   duration:
+                            //                       const Duration(milliseconds: 300),
+                            //                   builder: (BuildContext context,
+                            //                       double opacity, _) {
+                            //                     return Opacity(
+                            //                       opacity: opacity,
+                            //                       child: child,
+                            //                     );
+                            //                   },
+                            //                 )
+                            //               : Shimmer(style: widget.shimmerStyle);
+                            //         },
+                            //         errorBuilder: (_, __, ___) {
+                            //           return const Icon(Icons.error);
+                            //         },
+                            //       )
+                            //     :
+                            Image.network(
+                          widget.urlFrontImageProfile,
+                          width: widget.size.width -
+                              (widget.gapSize + widget.strokeWidth) * 2,
+                          height: widget.size.height -
+                              (widget.gapSize + widget.strokeWidth) * 2,
+                          fit: BoxFit.cover,
+                          frameBuilder: (context, child, frame, _) {
+                            return frame != null
+                                ? TweenAnimationBuilder<double>(
+                                    tween: Tween<double>(begin: .1, end: 1),
+                                    curve: Curves.ease,
+                                    duration: const Duration(milliseconds: 300),
+                                    builder: (BuildContext context,
+                                        double opacity, _) {
+                                      return Opacity(
+                                        opacity: opacity,
+                                        child: child,
+                                      );
+                                    },
+                                  )
+                                : Shimmer(style: widget.shimmerStyle);
+                          },
+                          errorBuilder: (_, __, ___) {
+                            return const Icon(Icons.error);
+                          },
+                        ),
                       ),
                     ),
                   ],
