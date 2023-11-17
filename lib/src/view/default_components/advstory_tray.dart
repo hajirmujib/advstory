@@ -210,21 +210,20 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                     // ),
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            widget.borderRadius -
-                                (widget.strokeWidth + widget.gapSize),
+                        borderRadius: BorderRadius.circular(
+                          widget.borderRadius -
+                              (widget.strokeWidth + widget.gapSize),
+                        ),
+                        color: Colors.white,
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0xFFC5C5C5),
+                            offset: Offset(0, 1),
+                            blurRadius: 3,
+                            spreadRadius: 0,
                           ),
-                          color: Colors.white,
-                          boxShadow: !widget.isMyProfile
-                              ? null
-                              : [
-                                  const BoxShadow(
-                                    color: Color(0xFFC5C5C5),
-                                    offset: Offset(0, 1),
-                                    blurRadius: 3,
-                                    spreadRadius: 0,
-                                  ),
-                                ]),
+                        ],
+                      ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(
                           widget.borderRadius -
@@ -264,18 +263,21 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                             //     :
                             widget.isMyProfile
                                 ? Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: !widget.isMyProfile
-                                            ? null
-                                            : [
-                                                const BoxShadow(
-                                                  color: Color(0xFFC5C5C5),
-                                                  blurRadius: 4,
-                                                  offset: Offset(
-                                                      0, 4), // Shadow position
-                                                ),
-                                              ]),
+                                    width: widget.size.width -
+                                        (widget.gapSize + widget.strokeWidth) *
+                                            2,
+                                    padding: EdgeInsets.zero,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //     color: Color(0xFFC5C5C5),
+                                      //     blurRadius: 4,
+                                      //     offset:
+                                      //         Offset(0, 4), // Shadow position
+                                      //   ),
+                                      // ],
+                                    ),
                                     child: Column(
                                       children: [
                                         Image.network(
@@ -337,9 +339,10 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                     width: widget.size.width -
                                         (widget.gapSize + widget.strokeWidth) *
                                             2,
-                                    height: widget.size.height -
+                                    height: (widget.size.height -
                                         (widget.gapSize + widget.strokeWidth) *
-                                            2,
+                                            2 +
+                                        20),
                                     fit: BoxFit.cover,
                                     frameBuilder: (context, child, frame, _) {
                                       return frame != null

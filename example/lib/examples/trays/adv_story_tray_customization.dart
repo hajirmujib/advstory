@@ -80,7 +80,8 @@ class _AdvStoryTrayCustomizationState extends State<AdvStoryTrayCustomization> {
               ],
             ),
           ),
-          Expanded(
+          SizedBox(
+            height: 100,
             child: AdvStory(
               storyCount: userNames.length,
               storyBuilder: (index) async {
@@ -112,6 +113,7 @@ class _AdvStoryTrayCustomizationState extends State<AdvStoryTrayCustomization> {
                   borderRadius: 20,
                   borderGradientColors: _selectedColors,
                   strokeWidth: 0,
+                  isMyProfile: index == 0,
                   urlFrontImageProfile: profilePics[index],
                   gapSize: 3,
 
