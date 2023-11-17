@@ -215,14 +215,16 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                 (widget.strokeWidth + widget.gapSize),
                           ),
                           color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0xFFC5C5C5),
-                              offset: Offset(0, 1),
-                              blurRadius: 3,
-                              spreadRadius: 0,
-                            ),
-                          ]),
+                          boxShadow: !widget.isMyProfile
+                              ? null
+                              : [
+                                  const BoxShadow(
+                                    color: Color(0xFFC5C5C5),
+                                    offset: Offset(0, 1),
+                                    blurRadius: 3,
+                                    spreadRadius: 0,
+                                  ),
+                                ]),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(
                           widget.borderRadius -
@@ -262,16 +264,18 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                             //     :
                             widget.isMyProfile
                                 ? Container(
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                         color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color(0xFFC5C5C5),
-                                            blurRadius: 4,
-                                            offset: Offset(
-                                                0, 4), // Shadow position
-                                          ),
-                                        ]),
+                                        boxShadow: !widget.isMyProfile
+                                            ? null
+                                            : [
+                                                const BoxShadow(
+                                                  color: Color(0xFFC5C5C5),
+                                                  blurRadius: 4,
+                                                  offset: Offset(
+                                                      0, 4), // Shadow position
+                                                ),
+                                              ]),
                                     child: Column(
                                       children: [
                                         Image.network(
@@ -291,8 +295,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                           frameBuilder:
                                               (context, child, frame, _) {
                                             return frame != null
-                                                ? TweenAnimationBuilder<
-                                                    double>(
+                                                ? TweenAnimationBuilder<double>(
                                                     tween: Tween<double>(
                                                         begin: .1, end: 1),
                                                     curve: Curves.ease,
@@ -300,8 +303,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                                         milliseconds: 300),
                                                     builder:
                                                         (BuildContext context,
-                                                            double opacity,
-                                                            _) {
+                                                            double opacity, _) {
                                                       return Opacity(
                                                         opacity: opacity,
                                                         child: child,
@@ -309,8 +311,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                                     },
                                                   )
                                                 : Shimmer(
-                                                    style:
-                                                        widget.shimmerStyle);
+                                                    style: widget.shimmerStyle);
                                           },
                                           errorBuilder: (_, __, ___) {
                                             return const Icon(Icons.error);
@@ -334,12 +335,10 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                 : Image.network(
                                     widget.bgStory,
                                     width: widget.size.width -
-                                        (widget.gapSize +
-                                                widget.strokeWidth) *
+                                        (widget.gapSize + widget.strokeWidth) *
                                             2,
                                     height: widget.size.height -
-                                        (widget.gapSize +
-                                                widget.strokeWidth) *
+                                        (widget.gapSize + widget.strokeWidth) *
                                             2,
                                     fit: BoxFit.cover,
                                     frameBuilder: (context, child, frame, _) {
@@ -358,8 +357,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                                                 );
                                               },
                                             )
-                                          : Shimmer(
-                                              style: widget.shimmerStyle);
+                                          : Shimmer(style: widget.shimmerStyle);
                                     },
                                     errorBuilder: (_, __, ___) {
                                       return const Icon(Icons.error);
