@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:advstory/advstory.dart';
-import 'package:advstory/src/util/animated_border_painter.dart';
 import 'package:advstory/src/view/components/shimmer.dart';
 import 'package:flutter/material.dart';
 
@@ -189,26 +188,26 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                 height: widget.size.height,
                 child: Stack(
                   children: [
-                    CustomPaint(
-                      painter: AnimatedBorderPainter(
-                        gradientColors: _gradientColors,
-                        gapSize: widget.gapSize,
-                        radius: widget.shape == BoxShape.circle
-                            ? widget.size.width
-                            : widget.borderRadius,
-                        strokeWidth: widget.strokeWidth,
-                        animation: CurvedAnimation(
-                          parent: Tween(begin: 0.0, end: 1.0).animate(
-                            _rotationController,
-                          ),
-                          curve: Curves.slowMiddle,
-                        ),
-                      ),
-                      child: SizedBox(
-                        width: widget.size.width,
-                        height: widget.size.height,
-                      ),
-                    ),
+                    // CustomPaint(
+                    //   // painter: AnimatedBorderPainter(
+                    //   //   gradientColors: _gradientColors,
+                    //   //   gapSize: widget.gapSize,
+                    //   //   radius: widget.shape == BoxShape.circle
+                    //   //       ? widget.size.width
+                    //   //       : widget.borderRadius,
+                    //   //   strokeWidth: widget.strokeWidth,
+                    //   //   animation: CurvedAnimation(
+                    //   //     parent: Tween(begin: 0.0, end: 1.0).animate(
+                    //   //       _rotationController,
+                    //   //     ),
+                    //   //     curve: Curves.slowMiddle,
+                    //   //   ),
+                    //   // ),
+                    //   child: SizedBox(
+                    //     width: widget.size.width,
+                    //     height: widget.size.height,
+                    //   ),
+                    // ),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
