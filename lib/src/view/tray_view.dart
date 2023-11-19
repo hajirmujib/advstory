@@ -11,7 +11,6 @@ import 'package:advstory/src/view/components/tray/tray_position_provider.dart';
 import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
 import 'package:advstory/src/view/story_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 /// Builds a tray list.
@@ -62,39 +61,31 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
   final bool _hideLoader = false;
 
   /// Opens story view and notifies listeners
-  void _show(Widget view, BuildContext context, int index) async {
+  void _show(
+    Widget view,
+    BuildContext context,
+    int index,
+    Widget tray,
+  ) async {
     _canShowStory = true;
 
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.transparent,
+      barrierColor: Colors.black,
       barrierLabel: 'Stories',
       pageBuilder: (_, __, ___) => view,
       transitionDuration: const Duration(milliseconds: 350),
       transitionBuilder: (c, animation, secondaryAnimation, child) {
-        return child;
-        // if (!c.mounted) {
-        //   return Container(
-        //     width: MediaQuery.of(context).size.width,
-        //     height: MediaQuery.of(context).size.height,
-        //     color: Colors.black,
-        //     child: const Center(
-        //         child: CircularProgressIndicator(
-        //       color: Colors.white,
-        //     )),
-        //   );
-        // }
-
-        // return SlideTransition(
-        //   position: Tween(begin: const Offset(0, 1), end: Offset.zero).animate(
-        //     CurvedAnimation(
-        //       parent: animation,
-        //       curve: Curves.linearToEaseOut,
-        //     ),
-        //   ),
-        //   child: child,
-        // );
+        return SlideTransition(
+          position: Tween(begin: const Offset(0, 1), end: Offset.zero).animate(
+            CurvedAnimation(
+              parent: animation,
+              curve: Curves.linearToEaseOut,
+            ),
+          ),
+          child: child,
+        );
       },
     );
     // Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -108,6 +99,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
       storyIndex: index,
       contentIndex: 0,
     );
+    log('notify');
   }
 
   Future<void> _handleTrayTap({
@@ -116,6 +108,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
     required int index,
   }) async {
     log('_handleTrayTap');
+    log('_hideLoader _handleTrayTap $_hideLoader');
 
     if (!_canShowStory) return;
 
@@ -142,56 +135,56 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
 
     // Set story PageController to start from the given index.
     widget.controller.storyController = PageController(initialPage: pos.story);
-
     _show(
-      SlideTransition(
-        position: posAnim,
-        child: DataProvider(
-          controller: widget.controller,
-          buildHelper: widget.buildHelper,
-          style: widget.style,
-          preloadStory: widget.preloadStory,
-          preloadContent: widget.preloadContent,
-          firstContentPreperation: firstContentPreperation,
-          child: const StoryView(),
+        SlideTransition(
+          position: posAnim,
+          child: DataProvider(
+            controller: widget.controller,
+            buildHelper: widget.buildHelper,
+            style: widget.style,
+            preloadStory: widget.preloadStory,
+            preloadContent: widget.preloadContent,
+            firstContentPreperation: firstContentPreperation,
+            child: const StoryView(),
+          ),
         ),
-      ),
-      context,
-      pos.story,
-    );
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (isAnimated) {
-        final story = await widget.buildHelper.buildStory(pos.story);
-        final content = story.contentBuilder(0);
+        context,
+        pos.story,
+        tray);
 
-        if (content is! SimpleCustomContent) {
-          // Handle jumps before story view opens
-          final posNotifier = widget.controller.positionNotifier;
-          if (posNotifier.story != pos.story || posNotifier.content != 0) {
-            firstContentPreperation!.complete();
-          } else {
-            // If position not changed, wait content preperation.
-            await firstContentPreperation!.future;
-          }
+    // SchedulerBinding.instance.addPostFrameCallback((_) async {
+    if (isAnimated) {
+      final story = await widget.buildHelper.buildStory(pos.story);
+      final content = story.contentBuilder(0);
+
+      if (content is! SimpleCustomContent) {
+        // Handle jumps before story view opens
+        final posNotifier = widget.controller.positionNotifier;
+        if (posNotifier.story != pos.story || posNotifier.content != 0) {
+          firstContentPreperation!.complete();
+        } else {
+          // If position not changed, wait content preperation.
+          await firstContentPreperation!.future;
         }
-
-        _trayAnimationManager!.update(shouldAnimate: false, index: index);
       }
 
-      if (widget.style.hideBars) {
-        await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-      }
+      _trayAnimationManager!.update(shouldAnimate: false, index: index);
+    }
 
-      _posController.forward();
-      // widget.controller.positionNotifier.update(status: StoryStatus.play);
+    if (widget.style.hideBars) {
+      await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    }
 
-      Future.delayed(const Duration(milliseconds: 300), () {
-        log('SchedulerBinding milliseconds');
+    _posController.forward();
+    //   // widget.controller.positionNotifier.update(status: StoryStatus.play);
 
-        widget.controller.positionNotifier.update(status: StoryStatus.play);
-      });
-      log('SchedulerBinding');
-    });
+    //   Future.delayed(const Duration(milliseconds: 300), () {
+    //     log('SchedulerBinding milliseconds');
+
+    widget.controller.positionNotifier.update(status: StoryStatus.play);
+    //   });
+    //   log('SchedulerBinding');
+    // });
   }
 
   @override
