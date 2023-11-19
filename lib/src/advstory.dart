@@ -27,6 +27,7 @@ class AdvStory extends StatefulWidget {
     required this.storyBuilder,
     required this.trayBuilder,
     this.onTapEmptyStory,
+    this.myStoryLength = 0,
     AdvStoryController? controller,
     this.buildStoryOnTrayScroll = true,
     this.preloadStory = true,
@@ -49,6 +50,7 @@ class AdvStory extends StatefulWidget {
     this.preloadContent = true,
     this.preloadStory = true,
     this.onTapEmptyStory,
+    this.myStoryLength = 0,
     this.style = const AdvStoryStyle(),
     required AdvStoryPlayerController controller,
   })  : hasTrays = false,
@@ -66,6 +68,7 @@ class AdvStory extends StatefulWidget {
   /// more general options.
   /// {@endtemplate}
   final AdvStoryStyle style;
+  final int myStoryLength;
 
   /// {@template advstory.storyController}
   /// A controller for manipulating flow and listening user interactions.
@@ -207,6 +210,7 @@ class _AdvStoryState extends State<AdvStory> with TickerProviderStateMixin {
         preloadContent: widget.preloadContent,
         preloadStory: widget.preloadStory,
         style: widget.style,
+        myStoryLength: widget.myStoryLength,
         // onTapEmptyStory: widget.onTapEmptyStory,
         trayBuilder: widget.trayBuilder!,
       );
