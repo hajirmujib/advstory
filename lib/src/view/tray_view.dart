@@ -5,7 +5,6 @@ import 'package:advstory/advstory.dart';
 import 'package:advstory/src/contants/enums.dart';
 import 'package:advstory/src/contants/types.dart';
 import 'package:advstory/src/controller/advstory_controller_impl.dart';
-import 'package:advstory/src/model/story_dto.dart';
 import 'package:advstory/src/util/build_helper.dart';
 import 'package:advstory/src/view/components/tray/tray_animation_manager.dart';
 import 'package:advstory/src/view/components/tray/tray_position_provider.dart';
@@ -25,7 +24,6 @@ class TrayView extends StatefulWidget {
     required this.myStoryLength,
     required this.buildStoryOnTrayScroll,
     required this.trayBuilder,
-    required this.isMyStory,
     this.onTapEmptyStory,
     Key? key,
   }) : super(key: key);
@@ -38,7 +36,6 @@ class TrayView extends StatefulWidget {
   final AdvStoryControllerImpl controller;
 
   final int myStoryLength;
-  final List<StoryDto> isMyStory;
 
   /// {@macro advstory.preloadContent}
   final bool preloadContent;
@@ -233,8 +230,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
 
           return GestureDetector(
             onTap: () async {
-              if (widget.isMyStory[index].visited!.isEmpty &&
-                  widget.isMyStory[index].isMyStory == true) {
+              if (widget.myStoryLength == 0 && index == 0) {
                 if (widget.onTapEmptyStory != null) {
                   widget.onTapEmptyStory!();
                 }
