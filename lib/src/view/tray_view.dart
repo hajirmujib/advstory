@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:advstory/advstory.dart';
 import 'package:advstory/src/contants/enums.dart';
@@ -95,6 +96,8 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
     required Widget tray,
     required int index,
   }) async {
+    log('_handleTrayTap');
+
     if (!_canShowStory) return;
 
     bool isAnimated = tray is TrayPositionProvider;
@@ -139,6 +142,8 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
     );
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      log('SchedulerBinding');
+
       if (isAnimated) {
         final story = await widget.buildHelper.buildStory(pos.story);
         final content = story.contentBuilder(0);
@@ -162,9 +167,13 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
       }
 
       _posController.forward();
-      Future.delayed(const Duration(milliseconds: 300), () {
-        widget.controller.positionNotifier.update(status: StoryStatus.play);
-      });
+      widget.controller.positionNotifier.update(status: StoryStatus.play);
+
+      // Future.delayed(const Duration(milliseconds: 300), () {
+      //   log('SchedulerBinding milliseconds');
+
+      //   widget.controller.positionNotifier.update(status: StoryStatus.play);
+      // });
     });
   }
 

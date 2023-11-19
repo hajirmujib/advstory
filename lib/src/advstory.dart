@@ -5,8 +5,8 @@ import 'package:advstory/src/controller/advstory_player_controller.dart';
 import 'package:advstory/src/model/models.dart';
 import 'package:advstory/src/util/build_helper.dart';
 import 'package:advstory/src/view/components/story_indicator.dart';
-import 'package:advstory/src/view/story_view.dart';
 import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
+import 'package:advstory/src/view/story_view.dart';
 import 'package:advstory/src/view/tray_view.dart';
 import 'package:flutter/material.dart';
 
@@ -155,7 +155,7 @@ class _AdvStoryState extends State<AdvStory> with TickerProviderStateMixin {
   @override
   void initState() {
     _opacityController = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 1),
       vsync: this,
       value: 1.0,
     );

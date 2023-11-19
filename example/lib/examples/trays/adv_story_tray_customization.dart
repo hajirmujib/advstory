@@ -105,6 +105,7 @@ class _AdvStoryTrayCustomizationState extends State<AdvStoryTrayCustomization> {
               ),
               trayBuilder: (index) {
                 return AdvStoryTray(
+                  
                   url: profilePics[index],
                   size: const Size(76, 97),
                   shape: BoxShape.rectangle,
