@@ -8,7 +8,6 @@ import 'package:advstory/src/controller/advstory_controller_impl.dart';
 import 'package:advstory/src/util/build_helper.dart';
 import 'package:advstory/src/view/components/tray/tray_animation_manager.dart';
 import 'package:advstory/src/view/components/tray/tray_position_provider.dart';
-import 'package:advstory/src/view/default_components/story_view.dart';
 import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
 import 'package:advstory/src/view/story_view.dart';
 import 'package:flutter/material.dart';
@@ -60,35 +59,49 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
 
   /// Used to determine whether a story can be shown or not.
   bool _canShowStory = true;
+  final bool _hideLoader = false;
 
   /// Opens story view and notifies listeners
   void _show(Widget view, BuildContext context, int index) async {
     _canShowStory = true;
 
-    // showGeneralDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   barrierColor: Colors.transparent,
-    //   barrierLabel: 'Stories',
-    //   pageBuilder: (_, __, ___) => view,
-    //   transitionDuration: const Duration(milliseconds: 350),
-    //   transitionBuilder: (context, animation, secondaryAnimation, child) {
-    //     return SlideTransition(
-    //       position: Tween(begin: const Offset(0, 1), end: Offset.zero).animate(
-    //         CurvedAnimation(
-    //           parent: animation,
-    //           curve: Curves.linearToEaseOut,
-    //         ),
-    //       ),
-    //       child: child,
-    //     );
-    //   },
-    // );
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return StoryViewPage(
-        child: view,
-      );
-    }));
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+      barrierLabel: 'Stories',
+      pageBuilder: (_, __, ___) => view,
+      transitionDuration: const Duration(milliseconds: 350),
+      transitionBuilder: (c, animation, secondaryAnimation, child) {
+        return child;
+        // if (!c.mounted) {
+        //   return Container(
+        //     width: MediaQuery.of(context).size.width,
+        //     height: MediaQuery.of(context).size.height,
+        //     color: Colors.black,
+        //     child: const Center(
+        //         child: CircularProgressIndicator(
+        //       color: Colors.white,
+        //     )),
+        //   );
+        // }
+
+        // return SlideTransition(
+        //   position: Tween(begin: const Offset(0, 1), end: Offset.zero).animate(
+        //     CurvedAnimation(
+        //       parent: animation,
+        //       curve: Curves.linearToEaseOut,
+        //     ),
+        //   ),
+        //   child: child,
+        // );
+      },
+    );
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return StoryViewPage(
+    //     child: view,
+    //   );
+    // }));
 
     widget.controller.notifyListeners(
       StoryEvent.trayTap,
