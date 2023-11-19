@@ -113,6 +113,15 @@ class AdvStoryTray extends AnimatedTray {
 /// State of the [AdvStoryTray] widget.
 class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
     with TickerProviderStateMixin {
+  late final _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1000),
+    reverseDuration: const Duration(milliseconds: 1000),
+    value: 1,
+    lowerBound: 1,
+    upperBound: 1.1,
+  );
+
   late final _rotationController = AnimationController(
     vsync: this,
     duration: widget.animationDuration,
@@ -138,6 +147,7 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
     setState(() {
       _gradientColors = _fadedColors;
     });
+    _controller.repeat(reverse: true);
 
     _rotationController.repeat();
   }
@@ -145,7 +155,8 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
   @override
   void stopAnimation() {
     _rotationController.reset();
-
+    _controller.reset();
+    _controller.stop();
     setState(() {
       _gradientColors = widget.borderGradientColors;
     });
@@ -171,6 +182,8 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
   @override
   void dispose() {
     _rotationController.dispose();
+    _controller.dispose();
+
     super.dispose();
   }
 
@@ -210,119 +223,130 @@ class _AdvStoryTrayState extends AnimatedTrayState<AdvStoryTray>
                               (widget.strokeWidth + widget.gapSize),
                         ),
                         child: widget.isMyProfile
-                            ? Container(
-                                width: widget.size.width -
-                                    (widget.gapSize + widget.strokeWidth) * 2,
-                                padding: EdgeInsets.zero,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Column(
-                                  children: [
-                                    Image.network(
-                                      widget.bgStory,
-                                      width: widget.size.width -
-                                          (widget.gapSize +
-                                                  widget.strokeWidth) *
-                                              2,
-                                      height: (widget.size.height -
-                                                  (widget.gapSize +
-                                                          widget.strokeWidth) *
-                                                      2) /
-                                              2 +
-                                          20,
-                                      fit: BoxFit.cover,
-                                      frameBuilder: (context, child, frame, _) {
-                                        return frame != null
-                                            ? TweenAnimationBuilder<double>(
-                                                tween: Tween<double>(
-                                                    begin: .1, end: 1),
-                                                curve: Curves.ease,
-                                                duration: const Duration(
-                                                    milliseconds: 300),
-                                                builder: (BuildContext context,
-                                                    double opacity, _) {
-                                                  return Opacity(
-                                                    opacity: opacity,
-                                                    child: child,
-                                                  );
-                                                },
-                                              )
-                                            : SizedBox(
-                                                width: widget.size.width -
+                            ? ScaleTransition(
+                                scale: _controller,
+                                child: Container(
+                                  width: widget.size.width -
+                                      (widget.gapSize + widget.strokeWidth) * 2,
+                                  padding: EdgeInsets.zero,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        widget.bgStory,
+                                        width: widget.size.width -
+                                            (widget.gapSize +
+                                                    widget.strokeWidth) *
+                                                2,
+                                        height: (widget.size.height -
                                                     (widget.gapSize +
                                                             widget
                                                                 .strokeWidth) *
-                                                        2,
-                                                height: (widget.size.height -
-                                                    (widget.gapSize +
-                                                            widget
-                                                                .strokeWidth) *
-                                                        2 +
-                                                    20),
-                                                child: Shimmer(
-                                                    style: widget.shimmerStyle),
-                                              );
-                                      },
-                                      errorBuilder: (_, __, ___) {
-                                        return const Icon(Icons.error);
-                                      },
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    const Center(
-                                      child: Text(
-                                        'Make my day',
-                                        style: TextStyle(
-                                            color: Color(0xFFC82626),
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.w700),
+                                                        2) /
+                                                2 +
+                                            20,
+                                        fit: BoxFit.cover,
+                                        frameBuilder:
+                                            (context, child, frame, _) {
+                                          return frame != null
+                                              ? TweenAnimationBuilder<double>(
+                                                  tween: Tween<double>(
+                                                      begin: .1, end: 1),
+                                                  curve: Curves.ease,
+                                                  duration: const Duration(
+                                                      milliseconds: 300),
+                                                  builder:
+                                                      (BuildContext context,
+                                                          double opacity, _) {
+                                                    return Opacity(
+                                                      opacity: opacity,
+                                                      child: child,
+                                                    );
+                                                  },
+                                                )
+                                              : SizedBox(
+                                                  width: widget.size.width -
+                                                      (widget.gapSize +
+                                                              widget
+                                                                  .strokeWidth) *
+                                                          2,
+                                                  height: (widget.size.height -
+                                                      (widget.gapSize +
+                                                              widget
+                                                                  .strokeWidth) *
+                                                          2 +
+                                                      20),
+                                                  child: Shimmer(
+                                                      style:
+                                                          widget.shimmerStyle),
+                                                );
+                                        },
+                                        errorBuilder: (_, __, ___) {
+                                          return const Icon(Icons.error);
+                                        },
                                       ),
-                                    )
-                                  ],
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      const Center(
+                                        child: Text(
+                                          'Make my day',
+                                          style: TextStyle(
+                                              color: Color(0xFFC82626),
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
-                            : Image.network(
-                                widget.bgStory,
-                                width: widget.size.width -
-                                    (widget.gapSize + widget.strokeWidth) * 2,
-                                height: (widget.size.height -
-                                    (widget.gapSize + widget.strokeWidth) * 2 +
-                                    20),
-                                fit: BoxFit.cover,
-                                frameBuilder: (context, child, frame, _) {
-                                  return frame != null
-                                      ? TweenAnimationBuilder<double>(
-                                          tween:
-                                              Tween<double>(begin: .1, end: 1),
-                                          curve: Curves.ease,
-                                          duration:
-                                              const Duration(milliseconds: 300),
-                                          builder: (BuildContext context,
-                                              double opacity, _) {
-                                            return Opacity(
-                                              opacity: opacity,
-                                              child: child,
-                                            );
-                                          },
-                                        )
-                                      : SizedBox(
-                                          width: widget.size.width -
-                                              (widget.gapSize +
-                                                      widget.strokeWidth) *
-                                                  2,
-                                          height: (widget.size.height -
-                                              (widget.gapSize +
-                                                      widget.strokeWidth) *
-                                                  2 +
-                                              20),
-                                          child: Shimmer(
-                                              style: widget.shimmerStyle));
-                                },
-                                errorBuilder: (_, __, ___) {
-                                  return const Icon(Icons.error);
-                                },
+                            : ScaleTransition(
+                                scale: _controller,
+                                child: Image.network(
+                                  widget.bgStory,
+                                  width: widget.size.width -
+                                      (widget.gapSize + widget.strokeWidth) * 2,
+                                  height: (widget.size.height -
+                                      (widget.gapSize + widget.strokeWidth) *
+                                          2 +
+                                      20),
+                                  fit: BoxFit.cover,
+                                  frameBuilder: (context, child, frame, _) {
+                                    return frame != null
+                                        ? TweenAnimationBuilder<double>(
+                                            tween: Tween<double>(
+                                                begin: .1, end: 1),
+                                            curve: Curves.ease,
+                                            duration: const Duration(
+                                                milliseconds: 300),
+                                            builder: (BuildContext context,
+                                                double opacity, _) {
+                                              return Opacity(
+                                                opacity: opacity,
+                                                child: child,
+                                              );
+                                            },
+                                          )
+                                        : SizedBox(
+                                            width: widget.size.width -
+                                                (widget.gapSize +
+                                                        widget.strokeWidth) *
+                                                    2,
+                                            height: (widget.size.height -
+                                                (widget.gapSize +
+                                                        widget.strokeWidth) *
+                                                    2 +
+                                                20),
+                                            child: Shimmer(
+                                                style: widget.shimmerStyle));
+                                  },
+                                  errorBuilder: (_, __, ___) {
+                                    return const Icon(Icons.error);
+                                  },
+                                ),
                               ),
                       ),
                     ),

@@ -63,7 +63,6 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
   /// Opens story view and notifies listeners
   void _show(Widget view, BuildContext context, int index) async {
     _canShowStory = true;
-    Navigator.pop(context);
 
     showGeneralDialog(
       context: context,
@@ -165,37 +164,15 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
       }
 
       _posController.forward();
-      widget.controller.positionNotifier.update(status: StoryStatus.play);
+      // widget.controller.positionNotifier.update(status: StoryStatus.play);
 
-      // Future.delayed(const Duration(milliseconds: 300), () {
-      //   log('SchedulerBinding milliseconds');
+      Future.delayed(const Duration(milliseconds: 300), () {
+        log('SchedulerBinding milliseconds');
 
-      //   widget.controller.positionNotifier.update(status: StoryStatus.play);
-      // });
+        widget.controller.positionNotifier.update(status: StoryStatus.play);
+      });
       log('SchedulerBinding');
     });
-  }
-
-  _onTap({
-    required BuildContext context,
-    required Widget tray,
-    required int index,
-  }) async {
-    showDialog(
-        context: context,
-        builder: (c) {
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.black,
-            child: const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            ),
-          );
-        });
-    await _handleTrayTap(context: context, tray: tray, index: index);
   }
 
   @override
@@ -235,7 +212,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
           }
 
           return GestureDetector(
-            onTap: () => _onTap(
+            onTap: () => _handleTrayTap(
               context: context,
               tray: tray,
               index: index,
