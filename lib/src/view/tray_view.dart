@@ -63,6 +63,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
   /// Opens story view and notifies listeners
   void _show(Widget view, BuildContext context, int index) async {
     _canShowStory = true;
+    Navigator.pop(context);
 
     showGeneralDialog(
       context: context,
@@ -97,20 +98,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
     required int index,
   }) async {
     log('_handleTrayTap');
-    showDialog(
-        context: context,
-        builder: (c) {
-          return Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.black,
-            child: const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            ),
-          );
-        });
+
     if (!_canShowStory) return;
 
     bool isAnimated = tray is TrayPositionProvider;
@@ -137,6 +125,22 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
     // Set story PageController to start from the given index.
     widget.controller.storyController = PageController(initialPage: pos.story);
 
+    _show(
+      SlideTransition(
+        position: posAnim,
+        child: DataProvider(
+          controller: widget.controller,
+          buildHelper: widget.buildHelper,
+          style: widget.style,
+          preloadStory: widget.preloadStory,
+          preloadContent: widget.preloadContent,
+          firstContentPreperation: firstContentPreperation,
+          child: const StoryView(),
+        ),
+      ),
+      context,
+      pos.story,
+    );
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (isAnimated) {
         final story = await widget.buildHelper.buildStory(pos.story);
@@ -170,24 +174,28 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
       // });
       log('SchedulerBinding');
     });
-    Navigator.pop(context);
+  }
 
-    _show(
-      SlideTransition(
-        position: posAnim,
-        child: DataProvider(
-          controller: widget.controller,
-          buildHelper: widget.buildHelper,
-          style: widget.style,
-          preloadStory: widget.preloadStory,
-          preloadContent: widget.preloadContent,
-          firstContentPreperation: firstContentPreperation,
-          child: const StoryView(),
-        ),
-      ),
-      context,
-      pos.story,
-    );
+  _onTap({
+    required BuildContext context,
+    required Widget tray,
+    required int index,
+  }) async {
+    showDialog(
+        context: context,
+        builder: (c) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.black,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          );
+        });
+    await _handleTrayTap(context: context, tray: tray, index: index);
   }
 
   @override
@@ -227,7 +235,7 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
           }
 
           return GestureDetector(
-            onTap: () => _handleTrayTap(
+            onTap: () => _onTap(
               context: context,
               tray: tray,
               index: index,
