@@ -1,5 +1,6 @@
 // Test data for the stories.
 const userNames = [
+  '',
   'Esther W Roberts',
   'Virgil T Vogel',
   'Paula A Dixon',
@@ -7,6 +8,7 @@ const userNames = [
   'Johnny N Hayes',
 ];
 const profilePics = [
+  '',
   'https://www.fakepersongenerator.com/Face/female/female1023053261475.jpg',
   'https://www.fakepersongenerator.com/Face/male/male1085513896637.jpg',
   'https://www.fakepersongenerator.com/Face/female/female20131023576348938.jpg',
@@ -14,11 +16,13 @@ const profilePics = [
   'https://www.fakepersongenerator.com/Face/male/male20161086415248322.jpg',
 ];
 const videoUrls = [
+  '',
   'https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-sign-1232-large.mp4',
   'https://assets.mixkit.co/videos/preview/mixkit-man-under-multicolored-lights-1237-large.mp4',
   'https://assets.mixkit.co/videos/preview/mixkit-mother-with-her-little-daughter-eating-a-marshmallow-in-nature-39764-large.mp4',
 ];
 const imageUrls = [
+  '',
   'https://images.unsplash.com/photo-1651979822227-31948d6c83bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
   'https://images.unsplash.com/photo-1641978909561-015aaa540119?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
   'https://images.unsplash.com/photo-1652007682665-e06a8ac589dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',

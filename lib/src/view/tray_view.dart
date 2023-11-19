@@ -23,11 +23,13 @@ class TrayView extends StatefulWidget {
     required this.style,
     required this.buildStoryOnTrayScroll,
     required this.trayBuilder,
+    this.onTapEmptyStory,
     Key? key,
   }) : super(key: key);
 
   /// Helper for story builds.
   final BuildHelper buildHelper;
+  final Function? onTapEmptyStory;
 
   /// {@macro advstory.storyController}
   final AdvStoryControllerImpl controller;
@@ -224,11 +226,17 @@ class _TrayViewState extends State<TrayView> with TickerProviderStateMixin {
           }
 
           return GestureDetector(
-            onTap: () => _handleTrayTap(
-              context: context,
-              tray: tray,
-              index: index,
-            ),
+            onTap: () {
+              if (widget.controller.storyCount == 0) {
+                widget.onTapEmptyStory;
+              } else {
+                _handleTrayTap(
+                  context: context,
+                  tray: tray,
+                  index: index,
+                );
+              }
+            },
             child: tray,
           );
         },

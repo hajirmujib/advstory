@@ -26,6 +26,7 @@ class AdvStory extends StatefulWidget {
     required this.storyCount,
     required this.storyBuilder,
     required this.trayBuilder,
+    this.onTapEmptyStory,
     AdvStoryController? controller,
     this.buildStoryOnTrayScroll = true,
     this.preloadStory = true,
@@ -47,6 +48,7 @@ class AdvStory extends StatefulWidget {
     required this.storyBuilder,
     this.preloadContent = true,
     this.preloadStory = true,
+    this.onTapEmptyStory,
     this.style = const AdvStoryStyle(),
     required AdvStoryPlayerController controller,
   })  : hasTrays = false,
@@ -120,6 +122,7 @@ class AdvStory extends StatefulWidget {
   /// set this to false.
   /// {@endtemplate}
   final bool preloadStory;
+  final Function? onTapEmptyStory;
 
   /// {@template advstory.preloadContent}
   /// Sets whether content preload is enabled or not.
@@ -204,6 +207,7 @@ class _AdvStoryState extends State<AdvStory> with TickerProviderStateMixin {
         preloadContent: widget.preloadContent,
         preloadStory: widget.preloadStory,
         style: widget.style,
+        // onTapEmptyStory: widget.onTapEmptyStory,
         trayBuilder: widget.trayBuilder!,
       );
     }
