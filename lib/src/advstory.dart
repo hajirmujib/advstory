@@ -3,6 +3,7 @@ import 'package:advstory/src/controller/advstory_controller.dart';
 import 'package:advstory/src/controller/advstory_controller_impl.dart';
 import 'package:advstory/src/controller/advstory_player_controller.dart';
 import 'package:advstory/src/model/models.dart';
+import 'package:advstory/src/model/story_dto.dart';
 import 'package:advstory/src/util/build_helper.dart';
 import 'package:advstory/src/view/components/story_indicator.dart';
 import 'package:advstory/src/view/inherited_widgets/data_provider.dart';
@@ -27,6 +28,7 @@ class AdvStory extends StatefulWidget {
     required this.storyBuilder,
     required this.trayBuilder,
     this.onTapEmptyStory,
+    this.isMyStory = const [],
     this.myStoryLength = 0,
     AdvStoryController? controller,
     this.buildStoryOnTrayScroll = true,
@@ -49,6 +51,7 @@ class AdvStory extends StatefulWidget {
     required this.storyBuilder,
     this.preloadContent = true,
     this.preloadStory = true,
+    this.isMyStory = const [],
     this.onTapEmptyStory,
     this.myStoryLength = 0,
     this.style = const AdvStoryStyle(),
@@ -69,6 +72,7 @@ class AdvStory extends StatefulWidget {
   /// {@endtemplate}
   final AdvStoryStyle style;
   final int myStoryLength;
+  final List<StoryDto> isMyStory;
 
   /// {@template advstory.storyController}
   /// A controller for manipulating flow and listening user interactions.
@@ -211,7 +215,12 @@ class _AdvStoryState extends State<AdvStory> with TickerProviderStateMixin {
         preloadStory: widget.preloadStory,
         style: widget.style,
         myStoryLength: widget.myStoryLength,
-        // onTapEmptyStory: widget.onTapEmptyStory,
+        isMyStory: widget.isMyStory,
+        onTapEmptyStory: () {
+          if (widget.onTapEmptyStory != null) {
+            widget.onTapEmptyStory!();
+          }
+        },
         trayBuilder: widget.trayBuilder!,
       );
     }
